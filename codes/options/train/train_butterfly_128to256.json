@@ -1,0 +1,81 @@
+{
+  "name": "RRDB_MS_RRDB_0_x2_Butterfly"
+  , "use_tb_logger": true
+  , "model":"srim_lp"
+  , "scale": 2
+  , "gpu_ids": [0]
+  , "load_partial": false
+
+  , "datasets": {
+    "train": {
+      "name": "n02279972"
+      , "mode": "LRHR"
+      , "dataroot_HR": "/home/nio/data/n02279972.lmdb"
+      , "dataroot_LR": "/home/nio/data/n02279972_128.lmdb"
+      , "subset_file": null
+      , "use_shuffle": true
+      , "n_workers": 8
+      , "batch_size": 640
+      , "HR_size": 256
+      , "use_flip": true
+      , "use_rot": true
+      , "batch_size_per_day": 1
+    }
+    , "val": {
+      "name": "n02279972_test"
+      , "mode": "LRHR"
+      , "dataroot_HR": "/home/nio/data/n02279972_test.lmdb"
+      , "dataroot_LR": "/home/nio/data/n02279972_test_128.lmdb"
+    }
+  }
+
+  , "path": {
+      "root": "/home/nio/HyperRIM"
+  , "pretrain_model_G": null
+
+  }
+
+  , "network_G": {
+    "which_model_G": "PEOneIMRRDB_net"
+    , "norm_type": null
+    , "mode": "CNA"
+    , "nf": 64
+    , "nb": 8
+    , "in_nc": 3
+    , "out_nc": 3
+    , "gc": 128
+    , "group": 1
+    , "in_code_nc" : 5
+    , "last_act":"tanh"
+
+    , "use_wn": true
+    , "L": 10
+  }
+
+  , "train": {
+    "lr_G": 1e-4
+    , "weight_decay_G": 0
+    , "beta1_G": 0.9
+    , "lr_scheme": "MultiStepLR"
+    , "lr_steps": [50000, 100000, 150000, 200000]
+    , "lr_gamma": 0.5
+
+    , "use_dci": true
+    , "num_code_per_img": 100
+    , "code_nc": 5
+    , "sample_perturbation_magnitude": 1e-1
+    , "zero_code": false
+    , "rand_code": false
+    , "num_month": 25
+    , "num_day": 4e4
+
+    , "manual_seed": 0
+    , "niter": 5e5
+    , "val_freq": 5e3
+  }
+
+  , "logger": {
+    "print_freq": 200
+    , "save_checkpoint_freq": 5e3
+  }
+}

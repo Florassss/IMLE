@@ -1,0 +1,10 @@
+numpy
+opencv-python
+lmdb
+pyyaml
+scipy
+scikit-image
+tensorflow
+tensorboard_logger
+matplotlib
+tqdm

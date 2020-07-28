@@ -1,0 +1,72 @@
+{
+  "name": "Best_Recall_Butterfly_HyperRIM"
+  , "use_tb_logger": true
+  , "model":"srim_lp"
+  , "scale": 8
+  , "gpu_ids": [0, 1]
+  , "cur_gpu": 0
+  , "load_partial": false
+  , "multiple": 1
+  , "datasets": {
+    "val": {
+      "name": "n02279972_test"
+      , "mode": "LRHR_mid"
+      , "dataroot_HR": "/home/nio/data/best_sample/256/"
+      , "dataroot_LR": "/home/nio/data/best_sample/32/"
+      , "dataroot_D1": "/home/nio/data/best_sample/64/"
+      , "dataroot_D2": "/home/nio/data/best_sample/128/"
+    }
+  }
+
+  , "path": {
+    "root": "/home/nio/HyperRIM"
+  , "pretrain_model_G": "/Path_to_saved_model_for_32_to_256" // Change this to three-stack model path
+
+  }
+
+  , "network_G": {
+    "which_model_G": "PESkipThreeIMRRDB_net"
+    , "norm_type": null
+    , "mode": "CNA"
+    , "nf": 64
+    , "nb": 8
+    , "in_nc": 3
+    , "out_nc": 3
+    , "gc": 64
+    , "group": 1
+    , "in_code_nc" : 5
+    , "last_act":"tanh"
+
+    , "use_wn": true
+    , "gcs": [256, 192, 128]
+    , "nfs": [128, 64, 64]
+    , "L": 10
+  }
+
+  , "train": {
+    "lr_G": 1e-5
+    , "weight_decay_G": 0
+    , "beta1_G": 0.9
+    , "lr_scheme": "MultiStepLR"
+    , "lr_steps": [50000, 100000, 200000, 300000]
+    , "lr_gamma": 0.5
+
+    , "use_dci": true
+    , "num_code_per_img": 20
+    , "code_nc": 5
+    , "sample_perturbation_magnitude": 1e-1
+    , "zero_code": false
+    , "rand_code": false
+    , "num_month": 20
+    , "num_day": 1e5
+
+    , "manual_seed": 0
+    , "niter": 5e5
+    , "val_freq": 5e3
+  }
+
+  , "logger": {
+    "print_freq": 200
+    , "save_checkpoint_freq": 5e3
+  }
+}
